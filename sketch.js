@@ -1,6 +1,6 @@
 var backgroundImg;
 var girl,girlSprite;
-var zombie,zombieSprite;
+var zombie,zombieSprite,zombieGroup;
 
 
 function preload(){
@@ -27,10 +27,10 @@ function draw() {
   background(backgroundImg);
 
   //moving the girl 
-  if(keyIsDown(UP_ARROW && girlSprite.position.y>=571)){
+  if(keyIsDown(UP_ARROW) && girlSprite.position.y>=585){
       girlSprite.position.y = girlSprite.position.y - 2;
   }     
- else if(keyIsDown(DOWN_ARROW && girlSprite.position.x>=685)){
+ else if(keyIsDown(DOWN_ARROW) && girlSprite.position.y<=671){
     girlSprite.position.y = girlSprite.position.y + 2;
  }
   else if(keyIsDown(RIGHT_ARROW)){
@@ -40,8 +40,26 @@ function draw() {
     girlSprite.position.x = girlSprite.position.x - 2;
   }
   console.log(girlSprite.position.y);
-  console.log(girlSprite.position.x);
-  
-  drawSprites();
-}
 
+  zombieSprite.setVelocity(-2,0);
+ 
+  function spawnZombies() {
+    //write code here to spawn the zombies
+    if (frameCount % 60 === 4) {
+      zombieSprite.y = Math.round(random(80,120));
+      zombieSprite.velocityX = -3;
+      
+       //assign lifetime to the variable
+       zombieSprite.lifetime = 100;
+      
+       //adjust the depth
+       zombieSprite.depth = girlSprite.depth;
+       girlSprite.depth = girlSprite.depth + 1;
+
+       //add each cloud to the group
+       zombieGroup.add(zombieSprite);
+
+        }
+     }
+     drawSprites();
+  }
